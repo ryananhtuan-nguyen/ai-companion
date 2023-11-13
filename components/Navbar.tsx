@@ -1,6 +1,8 @@
 'use client'
 
 import { cn } from '@/lib/utils'
+import { ModeToggle } from './mode-toggle'
+
 import { UserButton } from '@clerk/nextjs'
 import { Menu, Sparkle } from 'lucide-react'
 import { Poppins } from 'next/font/google'
@@ -33,6 +35,7 @@ const Navbar = () => {
           Upgrade
           <Sparkle className="h-4 w-4 fill-white text-white ml-2" />
         </Button>
+        <ModeToggle />
         <UserButton />
       </div>
     </div>
