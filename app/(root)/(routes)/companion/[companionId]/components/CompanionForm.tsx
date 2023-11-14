@@ -26,6 +26,8 @@ import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 import { Wand2 } from 'lucide-react'
 import { ImageUpload } from '@/components/ImageUpload'
+import { useToast } from '@/components/ui/use-toast'
+import { useRouter } from 'next/navigation'
 
 interface CompanionFormProps {
   initialData: Companion | null
@@ -62,6 +64,9 @@ const formSchema = z.object({
 })
 
 const CompanionForm = ({ initialData, categories }: CompanionFormProps) => {
+  const { toast } = useToast()
+  const router = useRouter()
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData || {
@@ -84,8 +89,18 @@ const CompanionForm = ({ initialData, categories }: CompanionFormProps) => {
         //CREATE COMPANION FUNCTIONALITY
         await axios.post(`/api/companion`, values)
       }
+
+      toast({
+        description: 'Success',
+      })
+
+      router.refresh()
+      router.push('/')
     } catch (error) {
-      console.log(error, ' Something went wrong ')
+      toast({
+        variant: 'destructive',
+        description: 'Something went wrong',
+      })
     }
   }
 
