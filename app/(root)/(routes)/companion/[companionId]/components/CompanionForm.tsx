@@ -1,5 +1,5 @@
 'use client'
-
+import axios from 'axios'
 import * as z from 'zod'
 import { Category, Companion } from '@prisma/client'
 import { useForm } from 'react-hook-form'
@@ -77,7 +77,16 @@ const CompanionForm = ({ initialData, categories }: CompanionFormProps) => {
   const isLoading = form.formState.isSubmitting
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values)
+    try {
+      if (initialData) {
+        await axios.patch(`/api/companion/${initialData.id}`, values)
+      } else {
+        //CREATE COMPANION FUNCTIONALITY
+        await axios.post(`/api/companion`, values)
+      }
+    } catch (error) {
+      console.log(error, ' Something went wrong ')
+    }
   }
 
   return (
