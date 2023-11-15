@@ -1,10 +1,10 @@
 'use client'
 
 import { Companion, Message } from '@prisma/client'
-import ChatMessage from './ChatMessage'
+import ChatMessage, { ChatMessageProps } from './ChatMessage'
 
 interface ChatMessagesProps {
-  messages: any[]
+  messages: ChatMessageProps[]
   isLoading: boolean
   companion: Companion
 }
