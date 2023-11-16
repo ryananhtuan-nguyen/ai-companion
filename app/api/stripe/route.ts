@@ -13,7 +13,7 @@ export async function GET() {
     const user = await currentUser()
 
     if (!userId || !user) {
-      return new NextResponse('Unauthorize', { status: 401 })
+      return new NextResponse('Unauthorized', { status: 401 })
     }
 
     const userSubscription = await prismadb.userSubscription.findUnique({
@@ -27,6 +27,7 @@ export async function GET() {
         customer: userSubscription.stripeCustomerId,
         return_url: settingsUrl,
       })
+
       return new NextResponse(JSON.stringify({ url: stripeSession.url }))
     }
 
@@ -42,8 +43,8 @@ export async function GET() {
           price_data: {
             currency: 'USD',
             product_data: {
-              name: 'Companion PRO',
-              description: 'Create Custom AI Companion',
+              name: 'Companion Pro',
+              description: 'Create Custom AI Companions',
             },
             unit_amount: 999,
             recurring: {
@@ -60,7 +61,7 @@ export async function GET() {
 
     return new NextResponse(JSON.stringify({ url: stripeSession.url }))
   } catch (error) {
-    console.log('[GET_STRIPE]', error)
-    return new NextResponse('Internal error', { status: 500 })
+    console.log('[STRIPE]', error)
+    return new NextResponse('Internal Error', { status: 500 })
   }
 }
