@@ -16,7 +16,7 @@ const font = Poppins({
   subsets: ['latin'],
 })
 
-const Navbar = () => {
+const Navbar = ({ isPro }: { isPro: boolean }) => {
   const proModal = useProModal()
 
   return (
@@ -35,10 +35,12 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="flex items-center gap-x-3">
-        <Button variant="premium" size="sm" onClick={proModal.onOpen}>
-          Upgrade
-          <Sparkle className="h-4 w-4 fill-white text-white ml-2" />
-        </Button>
+        {!isPro && (
+          <Button variant="premium" size="sm" onClick={proModal.onOpen}>
+            Upgrade
+            <Sparkle className="h-4 w-4 fill-white text-white ml-2" />
+          </Button>
+        )}
         <ModeToggle />
         <UserButton afterSignOutUrl="/" />
       </div>
