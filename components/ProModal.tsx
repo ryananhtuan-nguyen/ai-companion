@@ -11,7 +11,7 @@ import {
 import { Separator } from './ui/separator'
 import { Button } from './ui/button'
 import { useToast } from './ui/use-toast'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import axios from 'axios'
 
 const ProModal = () => {
@@ -19,6 +19,16 @@ const ProModal = () => {
   const { toast } = useToast()
 
   const [loading, setLoading] = useState(false)
+
+  //Avoid hydration error
+  const [isMounted, setIsMounted] = useState(false)
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
+  if (!isMounted) {
+    return null
+  }
 
   const onSubscribe = async () => {
     try {
